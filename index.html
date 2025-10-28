@@ -251,6 +251,11 @@
       user-select: none;
       z-index: 5;
       pointer-events: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); }
     }
 
     @media (max-width: 768px) {
@@ -419,19 +424,21 @@
         snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
         snowflake.style.opacity = Math.random();
         snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+        snowflake.style.animationDelay = Math.random() * 5 + 's';
         snowflakesContainer.appendChild(snowflake);
       }
     }
 
-    // ЛОКАЛЬНІ АУДІОФАЙЛИ
+    // Використовуємо існуючі аудіофайли
     const audio = {
-      bgMusic: new Audio('audio/newyear-music.mp3'),
+      bgMusic: new Audio('audio/bg-music.mp3'),
       click: new Audio('audio/click.mp3')
     };
     audio.bgMusic.loop = true;
     audio.bgMusic.volume = 0.4;
     audio.click.volume = 0.5;
 
+    // Використовуємо існуючі дизайни з папки halloween
     const DESIGNS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
     const nailTextures = {};
 
@@ -652,7 +659,8 @@
       async loadDesigns() {
         const loadImage = (name) => new Promise((resolve) => {
           const img = new Image();
-          img.src = `nails/newyear/${name}.png`;
+          // Використовуємо існуючі дизайни з папки halloween
+          img.src = `nails/halloween/${name}.png`;
           img.onload = () => {
             const texture = new THREE.CanvasTexture(img);
             texture.minFilter = THREE.LinearFilter;
@@ -679,7 +687,8 @@
         elements.designPicker.innerHTML = '';
         DESIGNS.forEach(name => {
           const btn = document.createElement('img');
-          btn.src = `nails/newyear/${name}.png`;
+          // Використовуємо існуючі дизайни з папки halloween
+          btn.src = `nails/halloween/${name}.png`;
           btn.className = `design-btn ${name === state.currentDesign ? 'selected' : ''}`;
           btn.alt = `Design ${name}`;
           btn.loading = 'lazy';
